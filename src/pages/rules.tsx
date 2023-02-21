@@ -82,7 +82,7 @@ const Rules: NextPage = () => {
                     <div className="flex flex-col p-4">
                       <p className="text-slate-700">Ports</p>
                       <p className="overflow-hidden text-ellipsis text-slate-500">
-                        {rule.ports || "None"}
+                        {rule.ports.replace(/,/g, ", ") || "None"}
                       </p>
                     </div>
                   </div>
