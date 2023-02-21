@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { trpc } from "@/utils/trpc";
 import { ComputerCard } from "@/components/computer-card";
+import { AddComputer } from "@/components/add-computer";
 
 const Home: NextPage = () => {
   const computers = trpc.computersRouter.getAll.useQuery();
@@ -18,12 +19,14 @@ const Home: NextPage = () => {
 
       <main className="grid min-h-screen grid-rows-[4rem,1fr] bg-slate-200 font-sans">
         <header className="flex items-center bg-slate-300 p-8">
-          <nav className="flex flex-row items-center gap-4 text-slate-700">
+          <nav className="flex w-full flex-row items-center gap-4 text-slate-700">
             <h1 className="text-2xl">Traffic Blocker</h1>
             <Link href="/">Computers</Link>
             <Link href="/rules">Rules</Link>
+            <AddComputer refetch={computers.refetch} />
           </nav>
         </header>
+
         <div className="flex flex-row flex-wrap place-content-start gap-4 p-8">
           {computers.data?.map((computer) => (
             <ComputerCard

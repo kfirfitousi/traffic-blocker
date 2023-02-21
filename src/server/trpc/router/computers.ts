@@ -23,6 +23,23 @@ export const computersRouter = router({
       },
     });
   }),
+  add: publicProcedure
+    .input(
+      z.object({
+        macAddress: z.string(),
+        hostname: z.string(),
+        ip: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.computer.create({
+        data: {
+          macAddress: input.macAddress,
+          hostname: input.hostname,
+          ip: input.ip,
+        },
+      });
+    }),
   assignRule: publicProcedure
     .input(
       z.object({

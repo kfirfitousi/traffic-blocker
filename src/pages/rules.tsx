@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { trpc } from "@/utils/trpc";
-import { Button } from "@/components/ui/button";
 import { RuleCard } from "@/components/rule-card";
 
 const Rules: NextPage = () => {

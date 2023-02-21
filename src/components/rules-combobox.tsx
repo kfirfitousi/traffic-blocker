@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import {
   Command,
   CommandEmpty,
@@ -9,13 +8,16 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
+import { cn } from "@/lib/utils";
 
 type RulesComboboxProps = {
   onSelect: (ruleId: string) => void;
