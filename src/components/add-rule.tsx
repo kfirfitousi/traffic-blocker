@@ -123,6 +123,7 @@ export function AddRule({ refetch }: AddRuleProps) {
           </Button>
           <Button
             variant="subtle"
+            disabled={addRuleMutation.isLoading}
             onClick={() => {
               addRuleMutation.mutate({
                 name,

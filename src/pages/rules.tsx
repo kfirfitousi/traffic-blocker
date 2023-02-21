@@ -1,7 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+import { X } from "lucide-react";
 
+import { trpc } from "@/utils/trpc";
+import { toast } from "@/hooks/use-toast";
+import { AddRule } from "@/components/add-rule";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/header";
+import { ToastAction } from "@/components/ui/toast";
+import { RuleCard } from "@/components/rule-card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,15 +20,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import { trpc } from "@/utils/trpc";
-import { RuleCard } from "@/components/rule-card";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
-import { AddRule } from "@/components/add-rule";
-import { Header } from "@/components/header";
 
 const Rules: NextPage = () => {
   const rules = trpc.rulesRouter.getAll.useQuery();

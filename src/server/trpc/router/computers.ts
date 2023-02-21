@@ -40,6 +40,19 @@ export const computersRouter = router({
         },
       });
     }),
+  delete: publicProcedure
+    .input(
+      z.object({
+        macAddress: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.computer.delete({
+        where: {
+          macAddress: input.macAddress,
+        },
+      });
+    }),
   assignRule: publicProcedure
     .input(
       z.object({

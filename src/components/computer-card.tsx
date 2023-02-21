@@ -60,7 +60,7 @@ export function ComputerCard({ computer, refetch }: ComputerDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex h-64 w-full cursor-pointer flex-col rounded border border-slate-400 p-4 hover:bg-slate-300 sm:w-64">
+        <div className="relative flex h-64 w-full cursor-pointer flex-col rounded border border-slate-400 px-4 py-8 hover:bg-slate-300 sm:w-64">
           <div className="grid grid-cols-2">
             <p className="text-sm text-slate-700">HOSTNAME:</p>
             <div className="flex justify-end text-slate-800">{hostname}</div>
@@ -80,11 +80,11 @@ export function ComputerCard({ computer, refetch }: ComputerDialogProps) {
               {rules.length > 0 ? "ACTIVE RULES:" : "NO ACTIVE RULES"}
             </p>
             <div className="flex flex-col items-start overflow-scroll text-clip pl-2 text-slate-800">
-              {rules.slice(0, 4).map((rule) => (
+              {rules.slice(0, 3).map((rule) => (
                 <p key={rule.id}>• {rule.name}</p>
               ))}
-              {rules.length > 4 && (
-                <p className="text-slate-500">+{rules.length - 4} more</p>
+              {rules.length > 3 && (
+                <p className="text-slate-500">+{rules.length - 3} more</p>
               )}
             </div>
           </div>

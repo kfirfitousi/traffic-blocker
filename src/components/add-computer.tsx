@@ -57,6 +57,7 @@ export function AddComputer({ refetch }: AddComputerProps) {
           />
           <Button
             variant="subtle"
+            disabled={addComputerMutation.isLoading}
             onClick={() => {
               addComputerMutation.mutate({
                 macAddress,
