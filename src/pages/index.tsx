@@ -38,11 +38,7 @@ const Home: NextPage = () => {
           <ToastAction
             altText="Undo"
             onClick={() => {
-              addComputerMutation.mutate({
-                macAddress: computer.macAddress,
-                hostname: computer.hostname,
-                ip: computer.ip,
-              });
+              addComputerMutation.mutate(computer);
             }}
           >
             Undo

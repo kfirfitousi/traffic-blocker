@@ -1,3 +1,11 @@
+import { useState } from "react";
+import { type Rule } from "@prisma/client";
+import { X } from "lucide-react";
+
+import { trpc } from "@/utils/trpc";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -7,14 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import type { Rule } from "@prisma/client";
-import { trpc } from "@/utils/trpc";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { X } from "lucide-react";
 
 type RuleCardProps = {
   trigger: React.ReactNode;
@@ -53,9 +53,9 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
           <div className="grid w-full gap-1.5">
             <Label htmlFor="name">Name</Label>
             <Input
-              type="text"
               id="name"
-              placeholder="Name"
+              type="text"
+              placeholder="Rule name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               onBlur={() => {
@@ -73,6 +73,7 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
               >
                 <Input
                   value={domain}
+                  placeholder="example.com"
                   onChange={(e) => {
                     setDomains((domains) =>
                       domains
@@ -89,14 +90,15 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
                   }}
                 />
                 <Button
-                  variant="outline"
                   size="sm"
+                  variant="outline"
                   className="ml-auto"
+                  disabled={domains === ""}
                   onClick={() => {
                     setDomains((domains) =>
                       domains
                         .split(",")
-                        .filter((domain, j) => i !== j)
+                        .filter((_, j) => i !== j)
                         .join(",")
                     );
                   }}
@@ -106,9 +108,10 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
               </div>
             ))}
             <Button
-              onClick={() => setDomains((domains) => domains + ",")}
-              variant="outline"
               size="sm"
+              variant="outline"
+              disabled={domains === "" || domains.endsWith(",")}
+              onClick={() => setDomains((domains) => domains + ",")}
             >
               Add domain
             </Button>
@@ -120,6 +123,7 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
               >
                 <Input
                   value={port}
+                  placeholder="80"
                   onChange={(e) => {
                     setPorts((ports) =>
                       ports
@@ -142,14 +146,15 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
                   }}
                 />
                 <Button
-                  variant="outline"
                   size="sm"
+                  variant="outline"
                   className="ml-auto"
+                  disabled={ports === ""}
                   onClick={() => {
                     setPorts((ports) =>
                       ports
                         .split(",")
-                        .filter((port, j) => i !== j)
+                        .filter((_, j) => i !== j)
                         .join(",")
                     );
                   }}
@@ -159,9 +164,10 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
               </div>
             ))}
             <Button
-              onClick={() => setPorts((ports) => ports + ",")}
-              variant="outline"
               size="sm"
+              variant="outline"
+              disabled={ports === "" || ports.endsWith(",")}
+              onClick={() => setPorts((ports) => ports + ",")}
             >
               Add port
             </Button>
