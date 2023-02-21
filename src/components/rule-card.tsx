@@ -23,6 +23,7 @@ type RuleCardProps = {
 };
 
 export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
+  const [name, setName] = useState(rule.name);
   const [domains, setDomains] = useState(rule.domains);
   const [ports, setPorts] = useState(rule.ports);
 
@@ -51,6 +52,20 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
             <DialogDescription>Block domains and ports.</DialogDescription>
           </DialogHeader>
           <div className="grid w-full gap-1.5">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              type="text"
+              id="name"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onBlur={() => {
+                updateRuleMutation.mutate({
+                  id,
+                  name,
+                });
+              }}
+            />
             <Label>Domains</Label>
             {domains.split(",").map((domain, i) => (
               <div

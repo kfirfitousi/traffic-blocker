@@ -30,6 +30,7 @@ export const rulesRouter = router({
     .input(
       z.object({
         id: z.string(),
+        name: z.string().optional(),
         domains: z.string().optional(),
         ports: z.string().optional(),
       })
@@ -40,8 +41,9 @@ export const rulesRouter = router({
           id: input.id,
         },
         data: {
-          domains: input?.domains || "",
-          ports: input?.ports || "",
+          name: input.name,
+          domains: input.domains,
+          ports: input.ports,
         },
       });
     }),
@@ -54,7 +56,7 @@ export const rulesRouter = router({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.rule.delete({
         where: {
-          id: input?.id,
+          id: input.id,
         },
       });
     }),
