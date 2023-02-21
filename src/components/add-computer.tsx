@@ -25,9 +25,7 @@ export function AddComputer({ refetch }: AddComputerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="ml-auto" variant="outline">
-          Add Computer
-        </Button>
+        <Button className="ml-auto">Add Computer</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div className="grid w-full max-w-sm items-center gap-1.5">

@@ -37,11 +37,10 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
     <div className="flex w-full flex-row items-center gap-2">
       <Dialog
         onOpenChange={() => {
-          setDomains((domains) => domains.replace(/,+$/, ""));
           updateRuleMutation.mutate({
             id,
-            domains,
-            ports,
+            domains: domains.replace(/,+$/, ""),
+            ports: ports.replace(/,+$/, ""),
           });
         }}
       >
@@ -62,7 +61,7 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
               onBlur={() => {
                 updateRuleMutation.mutate({
                   id,
-                  name,
+                  name: name.trim(),
                 });
               }}
             />
@@ -83,15 +82,9 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
                     );
                   }}
                   onBlur={() => {
-                    setDomains((domains) =>
-                      domains
-                        .split(",")
-                        .map((domain, j) => (i === j ? domain.trim() : domain))
-                        .join(",")
-                    );
                     updateRuleMutation.mutate({
                       id,
-                      domains,
+                      domains: domains.replace(/,+$/, ""),
                     });
                   }}
                 />
@@ -114,7 +107,7 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
             ))}
             <Button
               onClick={() => setDomains((domains) => domains + ",")}
-              variant="subtle"
+              variant="outline"
               size="sm"
             >
               Add domain
@@ -167,7 +160,7 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
             ))}
             <Button
               onClick={() => setPorts((ports) => ports + ",")}
-              variant="subtle"
+              variant="outline"
               size="sm"
             >
               Add port
@@ -175,7 +168,7 @@ export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
           </div>
           <DialogFooter>
             <DialogTrigger asChild>
-              <Button variant="subtle">Done</Button>
+              <Button variant="ghost">Done</Button>
             </DialogTrigger>
           </DialogFooter>
         </DialogContent>

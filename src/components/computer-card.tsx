@@ -60,7 +60,7 @@ export function ComputerCard({ computer, refetch }: ComputerDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex h-64 w-64 cursor-pointer flex-col rounded border border-slate-400 p-4 hover:bg-slate-300">
+        <div className="flex h-64 w-full cursor-pointer flex-col rounded border border-slate-400 p-4 hover:bg-slate-300 sm:w-64">
           <div className="grid grid-cols-2">
             <p className="text-sm text-slate-700">HOSTNAME:</p>
             <div className="flex justify-end text-slate-800">{hostname}</div>
@@ -141,7 +141,7 @@ export function ComputerCard({ computer, refetch }: ComputerDialogProps) {
         </div>
         <DialogFooter>
           <DialogTrigger asChild>
-            <Button variant="subtle">Done</Button>
+            <Button variant="ghost">Done</Button>
           </DialogTrigger>
         </DialogFooter>
       </DialogContent>

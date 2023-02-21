@@ -12,7 +12,7 @@ export const rulesRouter = router({
   add: publicProcedure
     .input(
       z.object({
-        name: z.string(),
+        name: z.string().min(1),
         domains: z.string().optional(),
         ports: z.string().optional(),
       })

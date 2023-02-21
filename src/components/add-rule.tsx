@@ -1,14 +1,15 @@
+import { useState } from "react";
+import { X } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
-import { useState } from "react";
-import { X } from "lucide-react";
 
 type AddRuleProps = {
   refetch: () => void;
@@ -26,9 +27,7 @@ export function AddRule({ refetch }: AddRuleProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="ml-auto" variant="outline">
-          Add Rule
-        </Button>
+        <Button className="ml-auto">Add Rule</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div className="grid w-full gap-1.5">
@@ -127,8 +126,8 @@ export function AddRule({ refetch }: AddRuleProps) {
             onClick={() => {
               addRuleMutation.mutate({
                 name,
-                domains,
-                ports,
+                domains: domains.replace(/,+$/, "").trim(), // remove trailing commas and trim
+                ports: ports.replace(/,+$/, "").trim(),
               });
             }}
           >
