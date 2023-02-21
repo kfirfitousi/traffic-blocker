@@ -28,6 +28,7 @@ const Home: NextPage = () => {
         </header>
 
         <div className="flex flex-row flex-wrap place-content-start gap-4 p-8">
+          {computers.isLoading && <p>Loading...</p>}
           {computers.data?.map((computer) => (
             <ComputerCard
               key={computer.macAddress}

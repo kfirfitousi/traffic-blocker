@@ -66,6 +66,7 @@ const Rules: NextPage = () => {
         </header>
 
         <div className="row-span-3 flex flex-col gap-4 p-8">
+          {rules.isLoading && <p>Loading...</p>}
           {rules.data?.map((rule) => (
             <div key={rule.id} className="flex flex-row gap-2">
               <RuleCard
