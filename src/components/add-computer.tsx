@@ -67,7 +67,7 @@ export function AddComputer({ refetch }: AddComputerProps) {
               });
             }}
           >
-            Add
+            Add Computer
           </Button>
         </div>
       </PopoverContent>

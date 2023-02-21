@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { AddRule } from "@/components/add-rule";
 
 const Rules: NextPage = () => {
   const rules = trpc.rulesRouter.getAll.useQuery();
@@ -55,11 +56,12 @@ const Rules: NextPage = () => {
       </Head>
 
       <main className="grid min-h-screen grid-rows-[4rem,1fr] bg-slate-200 font-sans">
-        <header className="row-span-1 flex items-center bg-slate-300 p-8">
-          <nav className="flex flex-row items-center gap-4 text-slate-700">
+        <header className="flex items-center bg-slate-300 p-8">
+          <nav className="flex w-full flex-row items-center gap-4 text-slate-700">
             <h1 className="text-2xl">Traffic Blocker</h1>
             <Link href="/">Computers</Link>
             <Link href="/rules">Rules</Link>
+            <AddRule refetch={rules.refetch} />
           </nav>
         </header>
 
