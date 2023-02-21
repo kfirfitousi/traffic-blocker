@@ -2,15 +2,13 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 
 export const rulesRouter = router({
-  getAll: publicProcedure
-    .input(z.object({ includeComputers: z.boolean().optional() }).optional())
-    .query(({ ctx, input }) => {
-      return ctx.prisma.rule.findMany({
-        include: {
-          computers: input?.includeComputers,
-        },
-      });
-    }),
+  getAll: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.rule.findMany({
+      include: {
+        computers: true,
+      },
+    });
+  }),
   add: publicProcedure
     .input(
       z.object({

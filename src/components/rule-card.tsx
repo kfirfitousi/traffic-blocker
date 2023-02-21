@@ -8,70 +8,32 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
-import type { Computer, Rule } from "@prisma/client";
+import type { Rule } from "@prisma/client";
 import { trpc } from "@/utils/trpc";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { X } from "lucide-react";
 
 type RuleCardProps = {
-  rule: Rule & {
-    computers: Computer[];
-  };
+  trigger: React.ReactNode;
+  rule: Rule;
   refetch: () => void;
 };
 
-export function RuleCard({ rule, refetch }: RuleCardProps) {
-  const { toast } = useToast();
-  const { id, name, computers } = rule;
-
+export function RuleCard({ trigger, rule, refetch }: RuleCardProps) {
   const [domains, setDomains] = useState(rule.domains);
   const [ports, setPorts] = useState(rule.ports);
 
-  const addRuleMutation = trpc.rulesRouter.add.useMutation({
-    onSuccess: () => refetch(),
-  });
-
-  const deleteRuleMutation = trpc.rulesRouter.delete.useMutation({
-    onSuccess: () => {
-      refetch();
-      toast({
-        title: "Rule deleted",
-        description: `Rule "${name}" has been removed from all computers and deleted.`,
-        action: (
-          <ToastAction
-            altText="Undo delete"
-            onClick={() => addRuleMutation.mutate(rule)}
-          >
-            Undo
-          </ToastAction>
-        ),
-      });
-    },
-  });
+  const { id } = rule;
 
   const updateRuleMutation = trpc.rulesRouter.update.useMutation({
     onSuccess: () => refetch(),
   });
 
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex w-full flex-row items-center gap-2">
       <Dialog
         onOpenChange={() => {
           setDomains((domains) => domains.replace(/,+$/, ""));
@@ -82,32 +44,7 @@ export function RuleCard({ rule, refetch }: RuleCardProps) {
           });
         }}
       >
-        <DialogTrigger asChild>
-          <div
-            key={id}
-            className="grid h-fit w-full cursor-pointer grid-cols-[1fr,1fr,1fr,3rem] rounded border border-slate-400 hover:bg-slate-300"
-          >
-            <div className="flex flex-col p-4">
-              <h2 className="text-lg text-slate-700">{name}</h2>
-              <p className="text-slate-500">
-                Assigned to {computers.length} computer
-                {computers.length !== 1 && "s"}
-              </p>
-            </div>
-            <div className="flex flex-col p-4">
-              <p className="text-slate-700">Domains</p>
-              <p className="overflow-hidden text-ellipsis text-slate-500">
-                {domains || "None"}
-              </p>
-            </div>
-            <div className="flex flex-col p-4">
-              <p className="text-slate-700">Ports</p>
-              <p className="overflow-hidden text-ellipsis text-slate-500">
-                {ports || "None"}
-              </p>
-            </div>
-          </div>
-        </DialogTrigger>
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit Rule</DialogTitle>
@@ -170,7 +107,7 @@ export function RuleCard({ rule, refetch }: RuleCardProps) {
             <Label className="mt-2">Ports</Label>
             {ports.split(",").map((port, i) => (
               <div
-                key={port}
+                key={i}
                 className="flex w-full flex-row items-center gap-2 rounded"
               >
                 <Input
@@ -228,31 +165,6 @@ export function RuleCard({ rule, refetch }: RuleCardProps) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      {/* Delete button */}
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="lg" className="h-full">
-            <X className="h-5 w-5" />
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Deleting this rule will remove it from all computers and delete
-              it.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => deleteRuleMutation.mutate({ id })}
-            >
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 }

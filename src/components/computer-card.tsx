@@ -15,6 +15,7 @@ import { Pencil, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import type { Computer, Rule } from "@prisma/client";
+import { RuleCard } from "@/components/rule-card";
 
 type ComputerDialogProps = {
   computer: Computer & {
@@ -79,11 +80,11 @@ export function ComputerCard({ computer, refetch }: ComputerDialogProps) {
               {rules.length > 0 ? "ACTIVE RULES:" : "NO ACTIVE RULES"}
             </p>
             <div className="flex flex-col items-start overflow-scroll text-clip pl-2 text-slate-800">
-              {rules.slice(0, 3).map((rule) => (
+              {rules.slice(0, 4).map((rule) => (
                 <p key={rule.id}>• {rule.name}</p>
               ))}
-              {rules.length > 3 && (
-                <p className="text-slate-500">+{rules.length - 3} more</p>
+              {rules.length > 4 && (
+                <p className="text-slate-500">+{rules.length - 4} more</p>
               )}
             </div>
           </div>
@@ -103,9 +104,15 @@ export function ComputerCard({ computer, refetch }: ComputerDialogProps) {
           >
             <p>{rule.name}</p>
             <div className="ml-auto flex gap-1">
-              <Button variant="outline" size="sm">
-                <Pencil className="h-4 w-4" />
-              </Button>
+              <RuleCard
+                rule={rule}
+                refetch={refetch}
+                trigger={
+                  <Button variant="outline" size="sm">
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                }
+              />
               <Button
                 variant="outline"
                 size="sm"
